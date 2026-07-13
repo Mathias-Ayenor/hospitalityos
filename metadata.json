@@ -1,0 +1,6 @@
+{
+  "name": "HospitalityOS",
+  "description": "An AI-powered, multi-tenant cloud hospitality management platform for hotels, guest houses, resorts, lodges, apartments, and hostels.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
