@@ -8,7 +8,7 @@ import { Sparkles, Send, Brain, Bot, HelpCircle, Loader2 } from "lucide-react";
 import { HospitalityAPI } from "../../services/api";
 
 interface AICopilotProps {
-  activeTab: "reception" | "finance" | "operations" | "executive";
+  activeTab: "dashboard" | "reception" | "rooms" | "finance";
   hotelState: any; // Contextual state representing current numbers for grounding
 }
 
@@ -29,17 +29,16 @@ export default function AICopilot({ activeTab, hotelState }: AICopilotProps) {
       "Calculate ADR and suggest premium rates",
       "Draft financial summary report",
       "Who has outstanding payments?",
-    ],
-    operations: [
-      "Generate prioritized housekeeping list",
-      "Review urgent maintenance tickets",
-      "Draft cleaning checklist for suite rooms",
-    ],
-    executive: [
-      "Suggest dynamic pricing for weekends",
-      "Recommend summer occupancy campaigns",
-      "Growth strategy checklist for new branch",
-    ]
+    ],rooms: [
+  "Generate housekeeping schedule",
+  "Which rooms need maintenance?",
+  "Show vacant rooms ready for check-in",
+],
+dashboard: [
+  "Summarize today's hotel performance",
+  "Show occupancy trends",
+  "Highlight today's operational alerts",
+]
   };
 
   // Switch welcome message when active tab changes
@@ -47,8 +46,11 @@ export default function AICopilot({ activeTab, hotelState }: AICopilotProps) {
     const welcomeMessages: Record<string, string> = {
       reception: "Hello! I am your Reception Desk Co-pilot. I can help you recommend available rooms, formulate customer emails, and answer guest accommodation questions.",
       finance: "Welcome. I am your Finance AI. I can calculate average daily rates (ADR), analyze outstanding balances, and draft revenue summaries.",
-      operations: "Greetings. I am your Operations AI. I can prioritize room cleaning logs, audit maintenance tickets, and suggest housekeeping priorities.",
-      executive: "Hello General Manager. I am your Executive AI. I can predict booking rates, outline marketing campaigns, and give dynamic pricing suggestions."
+     rooms:
+  "Hello! I am your Rooms & Housekeeping AI. I can help manage room status, housekeeping tasks, and maintenance requests.",
+
+dashboard:
+  "Welcome! I am your HospitalityOS Dashboard AI. I can summarize hotel performance, occupancy, revenue, and operational insights.",
     };
 
     setMessages([
@@ -92,25 +94,42 @@ export default function AICopilot({ activeTab, hotelState }: AICopilotProps) {
       setLoading(false);
     }
   };
+const getPersonaHeader = () => {
+  switch (activeTab) {
+    case "reception":
+      return {
+        name: "Reception Assistant AI",
+        color: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20",
+      };
 
-  const getPersonaHeader = () => {
-    switch (activeTab) {
-      case "reception":
-        return { name: "Reception Assistant AI", color: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20" };
-      case "finance":
-        return { name: "Finance Advisory AI", color: "text-amber-500 bg-amber-500/10 border-amber-500/20" };
-      case "operations":
-        return { name: "Operations Optimizer AI", color: "text-sky-500 bg-sky-500/10 border-sky-500/20" };
-      case "executive":
-        return { name: "Executive Strategic AI", color: "text-indigo-500 bg-indigo-500/10 border-indigo-500/20" };
-      default:
-        return { name: "HospitalityOS Copilot", color: "text-slate-500 bg-slate-500/10 border-slate-500/20" };
-    }
-  };
+    case "finance":
+      return {
+        name: "Finance Advisory AI",
+        color: "text-amber-500 bg-amber-500/10 border-amber-500/20",
+      };
 
-  const header = getPersonaHeader();
+    case "rooms":
+      return {
+        name: "Rooms Management AI",
+        color: "text-sky-500 bg-sky-500/10 border-sky-500/20",
+      };
 
-  return (
+    case "dashboard":
+      return {
+        name: "Hospitality Dashboard AI",
+        color: "text-indigo-500 bg-indigo-500/10 border-indigo-500/20",
+      };
+
+    default:
+      return {
+        name: "HospitalityOS Copilot",
+        color: "text-slate-500 bg-slate-500/10 border-slate-500/20",
+      };
+  }
+};
+
+const header = getPersonaHeader();
+return (
     <div id="ai-copilot-container" className="flex flex-col h-full bg-slate-900 border-l border-slate-800 text-slate-100">
       {/* Header */}
       <div className="p-4 border-b border-slate-800 flex items-center justify-between">
@@ -216,5 +235,5 @@ export default function AICopilot({ activeTab, hotelState }: AICopilotProps) {
         </button>
       </form>
     </div>
-  );
+);
 }

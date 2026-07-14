@@ -155,7 +155,7 @@ export const HospitalityAPI = {
   },
 
   // AI Co-pilot
-  async askCopilot(prompt: string, context: "reception" | "finance" | "operations" | "executive", state: any): Promise<string> {
+  async askCopilot(prompt: string, context: "dashboard" | "reception" | "rooms" | "finance", state: any): Promise<string> {
     const res = await fetch("/api/ai/copilot", {
       method: "POST",
       headers: getHeaders(),
