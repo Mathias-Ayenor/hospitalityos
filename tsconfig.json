@@ -22,5 +22,8 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": [
+    "src"
+, "server/middleware/auth.ts", "server/routes/onboarding.ts", "server/services/onboarding.service.ts", "server/supabaseAdmin.ts"  ]
 }

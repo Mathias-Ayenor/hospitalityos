@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-
+import onboardingRouter from "./server/routes/onboarding";
 import express from "express";
 import path from "path";
 import fs from "fs";
@@ -16,6 +16,7 @@ dotenv.config();
 // Initialize Express
 const app = express();
 app.use(express.json());
+app.use("/api/onboarding", onboardingRouter);
 const PORT = 3000;
 
 // Initialize Gemini Client
