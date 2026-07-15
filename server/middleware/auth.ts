@@ -16,7 +16,10 @@ export async function authMiddleware(
 ) {
   try {
     const supabaseAdmin = getSupabaseAdmin();
+
     const authorization = req.headers.authorization;
+
+    console.log("Authorization Header:", authorization);
 
     if (!authorization) {
       return res.status(401).json({
@@ -27,27 +30,32 @@ export async function authMiddleware(
 
     const token = authorization.replace("Bearer ", "");
 
+    console.log("Token Preview:", token.substring(0, 20) + "...");
+
     const {
       data: { user },
       error,
     } = await supabaseAdmin.auth.getUser(token);
 
+    console.log("Supabase User:", user);
+    console.log("Supabase Error:", error);
+
     if (error || !user) {
       return res.status(401).json({
         success: false,
-        message: "Invalid authentication token",
+        message: error?.message || "Invalid authentication token",
       });
     }
 
     req.authUser = user;
 
     next();
-  } catch (err) {
-    console.error(err);
+  } catch (err: any) {
+    console.error("Authentication Exception:", err);
 
     return res.status(500).json({
       success: false,
-      message: "Authentication failed",
+      message: err?.message || "Authentication failed",
     });
   }
 }

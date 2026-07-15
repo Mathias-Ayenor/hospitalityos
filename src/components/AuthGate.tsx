@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import App from "../App";
 import Login from "../features/auth/Login";
 import Register from "../features/auth/Register";
+import HotelWizard from "../features/onboarding/HotelWizard";
 
 import { useAuth } from "../hooks/useAuth";
 
@@ -13,8 +14,7 @@ export default function AuthGate() {
     hotel,
   } = useAuth();
 
-  const [showRegister, setShowRegister] =
-    useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   if (loading) {
     return (
@@ -25,33 +25,31 @@ export default function AuthGate() {
           </h2>
 
           <p className="text-slate-500 mt-2">
-            Loading...
+            Loading your workspace...
           </p>
         </div>
       </div>
     );
   }
 
+  // Not logged in
   if (!user) {
     return showRegister ? (
       <Register
-        onBackToLogin={() =>
-          setShowRegister(false)
-        }
+        onBackToLogin={() => setShowRegister(false)}
       />
     ) : (
       <Login
-        onCreateAccount={() =>
-          setShowRegister(true)
-        }
+        onCreateAccount={() => setShowRegister(true)}
       />
     );
   }
 
-  // Hotel onboarding will return here later
+  // Logged in but hotel not configured
   if (!hotel) {
-    return <App />;
+    return <HotelWizard />;
   }
 
+  // Logged in and onboarded
   return <App />;
 }

@@ -11,8 +11,15 @@ import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 
 // Load environment variables
-dotenv.config();
-
+dotenv.config({
+  path: ".env.local",
+  override: true,
+});
+console.log("Supabase URL loaded:", !!process.env.VITE_SUPABASE_URL);
+console.log(
+  "Service Role loaded:",
+  !!process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 // Initialize Express
 const app = express();
 app.use(express.json());
